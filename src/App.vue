@@ -1,13 +1,14 @@
 <template>
   <div id="app">
-      
          <router-view></router-view>
-     
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
+import home from './components/home/home.vue'
+import Util from './util/util'
+import Store from './assets/js/storage.js'
 export default {
   name: 'app',
 
@@ -17,7 +18,9 @@ export default {
     }
   },
   components:{
-  }
+    home
+  },
+
 }
 </script>
 

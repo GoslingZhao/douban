@@ -6,17 +6,18 @@
 			<swipe-item class="slide3"></swipe-item>
 		</swipe>
 		<ul class="custom-list">
-			<li>
-				<div class="img"><img /></div>
+			<li v-for="item in books">
+				<div class="img"><img :src="item.book.image"/></div>
 				<div class="list-text-container">
-					<span>asdkha</span>
-					<p>作者：我是谁 | 你是谁</p>
+					<span>{{item.book.title}}</span>
+					<p>作者：{{item.book.author_intro | captureAuthor}}</p>
 				</div>
 			</li>
 		</ul>
 	</div>
 </template>
 <script>
+import axios from "axios"
 import { Swipe, SwipeItem} from 'vue-swipe'
 Swipe.auto= false;
 export default {
@@ -29,8 +30,29 @@ export default {
 
   data () {
     return {
-
+    	books:[],
+    	flag: true
     };
+  },
+  mounted:function(){
+  	this.loadMore()
+  },
+  methods: {
+    loadMore: function() {
+        axios.get(API_PROXY+'https://api.douban.com/v2/book/user/alex1504/collections')
+        .then(function(res) {
+          this.books = res.data.collections;
+          this.flag = false;
+        }.bind(this))
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+  },
+  filters:{
+    captureAuthor: function(val){
+      return val ? val.slice(0,20)+"..." : "未知"
+    }
   }
 };
 </script>
@@ -75,16 +97,21 @@ export default {
 .custom-list{
 	font-size: 0.16rem;
 	li{
-		padding: 0.28rem 0.16rem;
+		padding: 0.4rem 0.16rem;
+		list-style: none;
 	}
 
 	div{
 		float: left;
 	}
 	.img{
-		width: 20%;
+		width: 0.4rem;
 		margin-right: 0.16rem;
-		background: red;
+		img{
+			width: 100%;
+			height: 0.4rem;
+			border-radius: 50%;
+		}
 	}
 	.list-text-container{
 		width: 75%;
@@ -92,6 +119,9 @@ export default {
 		border-bottom: 1px solid #ccc;
 		p{
 			padding-bottom: 0.16rem;
+			color: rgba(0,0,0,0.54);
+			font-size: 0.14rem;
+			white-space: normal;
 		}
 	}
 }

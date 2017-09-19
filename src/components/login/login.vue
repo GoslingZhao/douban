@@ -6,11 +6,11 @@
 		  </div>
 		  <div class="login">
 		  	<i class="iconfont icon-user"></i>
-		  	<input type="text" />
+		  	<input type="text" v-model="username" require="inputFlag"/>
 		  </div>
 		  <div class="login">
 		  	<i class="iconfont icon-password"></i>
-		  	<input type="password" />
+		  	<input type="password" v-model="password" require="inputFlag"/>
 		  </div>
 		   <button class="raised accent" @click="login">登录</button>
 		  <button class="raised warn" @click="goRegist">注册</button>
@@ -19,6 +19,9 @@
 </template>
 
 <script>
+import AV from "../../assets/js/av"
+import Util from "../../util/util"
+import "../../assets/js/initLeanCloud"
 export default {
 
   name: 'login',
@@ -34,10 +37,59 @@ export default {
   },
   methods:{
   	login(){
+  		var username = this.username;
+  		var pass = this.password;
+  		if(!this.check({
+  			username: username,
+  			pass: pass
+  		})) return;
 
+  			this.logging = true;
+  		AV.User.logIn(username,pass).then(function(loginedUser){
+  			setTimeout(function(){
+  				this.$router.push({name:'movie'})
+  			}.bind(this),600)
+  		}.bind(this),function(error){
+  			alert('用户名和密码不匹配');
+  			this.openDialog('check');
+  			this.logging = false;
+  		}.bind(this))
   	},
+  	isEmpty(val){
+  		return val ===''
+  	},
+  	check(obj){
+  		if(this.isEmpty(obj.username)){
+  			alert('用户名不能为空');
+  			this.openDialog('check');
+  			return false;
+  		}
+  		if(this.isEmpty(obj.pass)){
+  			alert('密码不能为空');
+  			this.openDialog('check');
+  			return false;
+  		}
+  		return true;
+  	},
+  	doneLogin(res){
+			this.alert.content = res.data.msg;
+			this.alert.ok = '';
+		    this.openDialog('check');
+		},
+		openDialog(ref) {
+	      // this.$refs[ref].open();
+	    },
+	    closeDialog(ref) {
+	      // this.$refs[ref].close();
+	    },
+	    onOpen() {
+	      console.log('Opened');
+	    },
+	    onClose(type) {
+	      console.log('Closed', type);
+	    },
   	goRegist(){
-
+  		this.$router.push({name:'regist'})
   	}
   }
 };

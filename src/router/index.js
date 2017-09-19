@@ -27,7 +27,7 @@ const router = new VueRouter({
               },
               {
                 path: '',
-                redirect: '/home/movie/movie_list_coming'
+                redirect: '/home/movie/movie_list_hot'
               }
           ]
         },

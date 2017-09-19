@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import axios from "axios"
+import Store from "../../assets/js/storage.js"
 export default {
 
   name: 'music',
@@ -54,6 +56,7 @@ export default {
   		this.$router.push({name:'music-list',params:{
   			listId:this.albums[index].id}
   		})
+  		Store.set('activeListId',this.albums[index].id);
   	}
   }
 };

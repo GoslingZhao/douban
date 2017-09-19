@@ -28,6 +28,11 @@ export default {
     headerBack,
     navbar,
     sidebar
+  },
+  computed:{
+    theme(){
+      return this.$store.getters.THEME_COLOR
+    }
   }
 }
 </script>

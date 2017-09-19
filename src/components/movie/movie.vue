@@ -33,7 +33,12 @@ export default {
 #movie{
 	ul{
 		overflow: hidden;
+		width: 100%;
 		background: #2196f3;
+		position: fixed;
+		left: 0;
+		// top: 0.64rem;
+
 
 		li{
 			float: left;
@@ -42,7 +47,7 @@ export default {
 			button{
 				border: none;
 				width: 100%;
-				height: 0.6rem;
+				height: 0.48rem;
 				background: none;
 				outline: none;
 				color: white;

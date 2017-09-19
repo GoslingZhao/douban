@@ -7,31 +7,140 @@
 		  </div>
 		  <div class="login">
 		  	<i class="iconfont icon-user"></i>
-		  	<input type="text" />
+		  	<input type="text" v-model="username" :require='inputFlag'/>
 		  </div>
 		  <div class="login">
 		  	<i class="iconfont icon-password"></i>
-		  	<input type="password" />
+		  	<input type="password" v-model="password" :require='inputFlag'/>
 		  </div>
 		  <button class="raised warn" @click="goRegist">注册</button>
 		</form>
+		<div
+		  
+		  @open="onOpen"
+		  @close="onClose"
+		  ref="check">
+		</div>
+		
+		<div class="overlay" v-show="registing">
+			<div :md-size="150" md-indeterminate class="md-accent" md-theme="whiteForm"></div>
+		</div> 
 	</div>
 </template>
 
 <script>
+import Util from "../../util/util.js"
+import AV from "../../assets/js/av.js"
+import "../../assets/js/initLeanCloud"
 export default {
 
   name: 'regist',
 
   data () {
     return {
-
+    	alert:{
+    		content:'',
+    		ok:'返回'
+    	},
+    	isHide: false,
+    	tipFlag: false,
+    	inputFlag: true,
+    	username: '',
+    	password: '',
+    	registing: false
     };
   },
   methods:{
   	goRegist(){
+  		var username = this.username;
+  		var pass = this.password;
+  		if(!this.check({
+  			username: username,
+  			pass: pass
+  		}))return;
 
-  	}
+  			this.registing = true
+
+  			var user = new AV.User();
+  			user.setUsername(username);
+  			user.setPassword(pass);
+  			user.signUp().then(function(loginedUser){
+  				this.registing = false;
+  				this.doneRegist();
+  				setTimeout(function(){
+  					this.$router.push({name:'movie'})
+  				}.bind(this),600)
+  			}.bind(this),(function(error){
+  				if(error.code = '202'){
+  					// this.alert.content = '用户名已存在';
+  					alert('用户名已存在')
+  				}else{
+  					// this.alert.content = '注册失败，请重试';
+  					alert('注册失败')
+  				}
+  				this.openDialog('check');
+  				this.registing = false;
+  			}.bind(this)));
+  	},
+  	isEmpty(val){
+  		return val === '';
+  	},
+  	isValidUserName(val){
+  		return /^[a-zA-Z0-9_]+$/.test(val);
+  	},
+  	isValidPassword(val){
+  		return /^[A-Za-z0-9_-]{4,}$/.test(val); 
+  	},
+  	check(obj){
+  		if(this.isEmpty(obj.username)){
+				// this.alert.content = '用户名不能为空';
+				alert('用户名不能为空')
+				this.openDialog('check');
+				return false;
+			}
+			if(this.isEmpty(obj.pass)){
+				this.alert.content = '密码不能为空';
+				alert('密码不能为空')
+				this.openDialog('check');
+				return false;
+			}
+			if(!this.isValidUserName(obj.username)){
+				// this.alert.content = '用户名不能含有除字母或数字或下划线之外的任何字符';
+				alert('用户名不能含有除字母或数字或下划线之外的任何字符')
+				this.openDialog('check');
+				return false;
+			}
+			if(!this.isValidPassword(obj.pass)){
+				// this.alert.content = '密码必须是至少4位的字母或数字结合';
+				alert('密码必须是至少4位的字母或数字结合')
+				this.openDialog('check');
+				return false;
+			}
+			return true
+  	},
+  	doneRegist(){
+  		this.alert.content = '注册成功';
+  		this.alert.ok = '';
+  		this.openDialog('check');
+  	},
+  	openDialog(ref) {
+	    // this.$refs[ref].open();
+	},
+	closeDialog(ref) {
+	    // this.$refs[ref].close();
+	},
+	onOpen() {
+	    console.log('Opened');
+	},
+	onClose(type) {
+	    console.log('Closed', type);
+	}
+  },
+  mounted(){
+  	this.tipFlag = true;
+  	setTimeout(function(){
+  		this.tipFlag = false;
+  	}.bind(this),4000)
   }
 };
 </script>
