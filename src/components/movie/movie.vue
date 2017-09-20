@@ -1,6 +1,7 @@
 <template>
 	<div id="movie">
 		<ul>
+			<router-link to="movie_list_top250" activeClass="active" tag="li">Top250</router-link>
 			<router-link to="movie_list_hot" activeClass="active" tag="li">正在热映</router-link>
 			<router-link to="movie_list_coming" activeClass="active" tag="li">即将上映</router-link>
 		</ul>
@@ -37,7 +38,7 @@ export default {
 		li{
 			float: left;
 			list-style: none;
-			width: 50%;
+			width: 33%;
 			height: 0.48rem;
 			line-height: 0.48rem;
 		}

@@ -26,8 +26,13 @@ const router = new VueRouter({
                 component: require('../components/movie/movie_list_hot.vue')
               },
               {
+                path: 'movie_list_top250',
+                name: 'movie_list_top250',
+                component: require('../components/movie/movie_list_top250.vue')
+              },
+              {
                 path: '',
-                redirect: '/home/movie/movie_list_hot'
+                redirect: '/home/movie/movie_list_top250'
               }
           ]
         },

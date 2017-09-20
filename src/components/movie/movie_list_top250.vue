@@ -32,6 +32,11 @@ export default {
   		busy: false
   	}
   },
+  computed:{
+    spinnerClass(){
+      return this.$store.getters.SPINNER_CLASS
+    }
+  },
   mounted:function(){
   	this.scrContainer = this.$el;
     this.scrContent = this.$el.querySelector(".j-content")
@@ -42,6 +47,13 @@ export default {
         this.loadMore();
       }
     }.bind(this))
+  },
+  watch: {
+  	movieLists: function(){
+  		setTimeout(function(){
+        // this.eleH = this.scrContent.offsetHeight;
+      }.bind(this),1000)
+  	}
   },
   methods: {
     getMovieDetail(id){
@@ -54,7 +66,7 @@ export default {
       var start = this.movieLists.length;
       this.busy = true;
       this.spinnerFlag = true;
-      axios.get(API_PROXY+'https://api.douban.com/v2/movie/coming_soon?count=10&start='+start)
+      axios.get(API_PROXY+'https://api.douban.com/v2/movie/top250?count=10&start='+start)
 		  .then(function(res) {
 		  	console.log(res);
 		    res.data.subjects.forEach(movie=>{

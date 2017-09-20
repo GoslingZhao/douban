@@ -4,7 +4,6 @@
 			<i class="iconfont icon-back" @click="handleBack"></i>
 			<h2>music</h2>
 		</div>
-		<Search></Search>
 		<div class="list">
 			<ul>
 				<li v-for="(music,index) of musicList">
@@ -18,14 +17,12 @@
 </template>
 
 <script>
-import Search from "./search_music.vue"
 import Store from "../../assets/js/storage.js"
 import axios from "axios"
 export default {
 
   name: 'music_list',
   components:{
-  	Search
   },
 
   data () {
@@ -100,6 +97,7 @@ export default {
 		align-content: center;
 		text-align: center;
 		padding: 0.19rem 0;
+    top:0;
 		i{
 			margin-left: 0.2rem;
 		}
@@ -111,6 +109,7 @@ export default {
 	.list{
 		font-size: 0.16rem;
 		text-align: left;
+    padding-top: 0.61rem;
 
 		li{
 			height: 0.4rem;
