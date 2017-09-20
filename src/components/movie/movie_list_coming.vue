@@ -1,6 +1,11 @@
 <template>
 	<div id="movieComing">
-		<ul>
+		<ul
+      v-infinite-scroll="loadMore"
+      infinite-scroll-disabled="loading"
+      infinite-scroll-distance="0"
+      infinite-scroll-immediate-check="false"
+    >
 			<li v-for="movie in movieLists" @click="getMovieDetail(movie.id)">
 				<img :src="movie.images.large"/>
 				<h3>{{movie.title}}</h3>
@@ -12,6 +17,9 @@
 
 <script>
 import axios from "axios"
+import Vue from 'vue'
+import { InfiniteScroll} from 'mint-ui';
+Vue.use(InfiniteScroll);
 export default {
 
   data(){
@@ -89,7 +97,7 @@ export default {
 
 <style lang="scss" scoped>
 #movieComing{
-	padding-top: 1.12rem;
+	padding: 1.12rem 0 0.6rem;
 }
 li{
 	overflow: hidden;

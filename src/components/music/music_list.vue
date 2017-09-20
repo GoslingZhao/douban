@@ -2,7 +2,7 @@
 	<div id="musicList">
 		<div class="top">
 			<i class="iconfont icon-back" @click="handleBack"></i>
-			<h2>飙升榜</h2>
+			<h2>music</h2>
 		</div>
 		<Search></Search>
 		<div class="list">

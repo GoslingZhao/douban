@@ -60,7 +60,7 @@ export default {
 <style lang="scss" scoped>
 #book{
 	box-sizing: border-box;
-	padding: 0.64rem 0;
+	padding: 0.64rem 0 1rem;
 	text-align: center;
 	.my-swipe{
 		height: 2rem;

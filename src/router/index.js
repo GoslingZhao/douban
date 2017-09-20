@@ -88,11 +88,6 @@ const router = new VueRouter({
     component: require('../components/common/navbar.vue')
   },
   {
-    path: '/backToTop',
-    name: 'backToTop',
-    component: require('../components/common/backToTop.vue')
-  },
-  {
     path: '/headerBack',
     name: 'headerBack',
     component: require('../components/common/header_back.vue')

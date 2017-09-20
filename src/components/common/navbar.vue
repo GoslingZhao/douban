@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import Util from "../../util/util"
+import AV from "../../assets/js/av"
 export default {
 
   name: 'navbar',

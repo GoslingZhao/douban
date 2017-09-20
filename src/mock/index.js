@@ -1,5 +1,5 @@
 import Mock from 'mockjs';
-import Util from '../util/util.js'
+import Util from '../util/util'
 /*API-Login-登录接口模拟*/
 var login = Mock.mock("/api/login",{
   "msg":"登录成功",          //登录成功过信息

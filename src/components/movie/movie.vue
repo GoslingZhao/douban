@@ -1,14 +1,15 @@
 <template>
 	<div id="movie">
 		<ul>
-			<li @click="handleHot"><button>正在热映</button></li>
-			<li @click="handleComing"><button>即将上映</button></li>
+			<router-link to="movie_list_hot" activeClass="active" tag="li">正在热映</router-link>
+			<router-link to="movie_list_coming" activeClass="active" tag="li">即将上映</router-link>
 		</ul>
 		<router-view></router-view>
 	</div>
 </template>
 
 <script>
+import Util from "../../util/util.js"
 export default {
 
   name: 'movie',
@@ -17,14 +18,6 @@ export default {
     return {
 
     };
-  },
-  methods:{
-  	handleComing(){
-  		this.$router.push({name:'movie_list_coming'})
-  	},
-  	handleHot(){
-  		this.$router.push({name:'movie_list_hot'})
-  	}
   }
 };
 </script>
@@ -37,23 +30,22 @@ export default {
 		background: #2196f3;
 		position: fixed;
 		left: 0;
-		// top: 0.64rem;
+		font-size: 0.16rem;
+		top: 0.64rem;
 
 
 		li{
 			float: left;
 			list-style: none;
 			width: 50%;
-			button{
-				border: none;
-				width: 100%;
-				height: 0.48rem;
-				background: none;
-				outline: none;
-				color: white;
-			}
+			height: 0.48rem;
+			line-height: 0.48rem;
 		}
 	}
 
 }
+.active{
+		border-bottom: 0.05rem solid red;
+		color:red
+	}
 </style>

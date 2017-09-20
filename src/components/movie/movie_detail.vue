@@ -2,19 +2,19 @@
 	<div id="movieDetail">
 		<div class="top">
 			<i class="iconfont icon-back" @click="handleBack"></i>
-			<h2>飙升榜</h2>
+			<h2>movie</h2>
 		</div>
 		<div class="cardHeader">
 				<img :src="movieDetail.images ? movieDetail.images.large : ''">
 				<h2 class="md-title">{{movieDetail.title}}</h2>
 			     <div class="md-subhead">
 			       <p>{{movieDetail.countries ? movieDetail.countries[0] : ''}}<span v-for="genre in movieDetail.genres">{{genre}}</span></p>
-			       <p>年份：{{movieDetail.year}}</p>
+			       <p>{{movieDetail.year}}</p>
 			       <div class="cardContent">{{movieDetail.summary}}</div>
 			     </div>
 		</div>
 		<div class="cardContent1">
-			<h3 class="md-subheading">导演：{{movieDetail.directors ? movieDetail.directors[0].name : ''}}</h3>
+			<h3 class="md-subheading">{{movieDetail.directors ? movieDetail.directors[0].name : ''}}</h3>
 			<div class="card-reservation">
 			    <img :src="movieDetail.directors ? movieDetail.directors[0].avatars.medium : ''" alt="">
 			</div>
@@ -54,6 +54,9 @@ export default {
 		        .catch(function(error){
 		          console.log(error);
 		        });
+
+		        this.$store.commit("changeTitle",this.movieDetail.title)
+
 		},
 		handleBack(){
   		this.$router.push({name:'movie'})
