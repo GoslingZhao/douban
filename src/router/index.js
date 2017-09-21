@@ -98,7 +98,7 @@ const router = new VueRouter({
     component: require('../components/common/header_back.vue')
   },
   {
-    path:'*', redirect: './login'
+    path:'*', redirect: './regist'
   }]
 
 });

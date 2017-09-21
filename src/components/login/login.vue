@@ -6,7 +6,7 @@
 		  </div>
 		  <div class="login">
 		  	<i class="iconfont icon-user"></i>
-		  	<input type="text" v-model="username" require="inputFlag"/>
+		  	<input type="text" v-model="name" require="inputFlag"/>
 		  </div>
 		  <div class="login">
 		  	<i class="iconfont icon-password"></i>
@@ -28,7 +28,7 @@ export default {
     return {
     	tipFlag: false,
 		inputFlag: true,
-		username: '',
+		name: '',
 		password: '',
 		logging: false,
 		unameHelp:'',
@@ -38,29 +38,25 @@ export default {
   },
   methods:{
   	login(){
-  		var username = this.username;
+  		var username = this.name;
   		var pass = this.password;
+  		console.log(this.name)
+  		console.log(this.password)
   		if(!this.check({
-  			username: username,
+  			name: username,
   			pass: pass
   		})) return;
 
   			this.logging = true;
-  		axios.post(API_PROXY+"/api/login",{
-			name:this.username,
-			password:this.password
-		}).then(res=>{console.log(res);
+  		axios.post("/api/login","name="+this.name+"&password="+this.password)
+		.then(res=>{
+			console.log(res.data)
 			if(res.data){
-				sessionStorage.setItem('name', this.username);
-				alert("登录成功！");
-				this.$router.push({name:'movie'})
+				alert("登录成功");
+				this.$router.push({name:'movie'});
+			}else{                                                               alert("账号未注册或账号、密码错误")
 			}
-		}).catch(error=>{console.log(error);
-				if(!res.data){
-			alert("账户不存或账户、密码错误")
-		}
-			}
-		)
+		})
   	},
   	isEmpty(val){
   		return val ===''

@@ -7,7 +7,7 @@
 		  </div>
 		  <div class="login">
 		  	<i class="iconfont icon-user"></i>
-		  	<input type="text" v-model="username" :require='inputFlag'/>
+		  	<input type="text" v-model="name" :require='inputFlag'/>
 		  </div>
 		  <div class="login">
 		  	<i class="iconfont icon-password"></i>
@@ -40,7 +40,7 @@ export default {
     	isHide: false,
     	tipFlag: false,
     	inputFlag: true,
-    	username: '',
+    	name: '',
     	password: '',
     	registing: false,
 
@@ -48,25 +48,29 @@ export default {
   },
   methods:{
   	goRegist(){
-  		var username = this.username;
+  		var username = this.name;
   		var pass = this.password;
+  		console.log(this.name)
+  		console.log(this.password)
   		if(!this.check({
-  			username: username,
+  			name: username,
   			pass: pass
   		}))return;
 
   			this.registing = true
-  		axios.post(API_PROXY+"/api/register",{
-			username:this.userame,
-			password:this.password
-		}).then(res=>{console.log(res); 
-				if(res.data===false){
-					alert("用户已存在")
-				}else{
-					alert("注册成功！");
-					this.$router.push({name:'movie'})
-				}
-		}).catch(error=>{console.log(error);
+  		axios.post("/api/register","name="+this.name+"&password="+this.password)
+		.then(res=>{
+			console.log(res.data);
+			if(res.data){
+				alert("注册成功！");
+				this.$router.push({name:'movie'});
+			}else{
+				alert("账户已注册！");
+			}
+		})
+		.catch(error=>{
+			console.log(error);
+			
 		})
   	},
   	isEmpty(val){

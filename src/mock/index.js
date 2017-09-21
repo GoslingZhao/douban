@@ -1,10 +1,4 @@
 import Mock from 'mockjs';
-/*API-Login-登录接口模拟*/
-var login = Mock.mock("/api/login",{
-  "msg":"登录成功",          //登录成功过信息
-  "code": 0,                 //正常          
-  "time": 240000              //有效期4分钟
-})
 
 /*API-movie*/
 var movie = Mock.mock("/api/movie",{
