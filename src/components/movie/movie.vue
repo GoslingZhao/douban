@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import Util from "../../util/util.js"
 export default {
 
   name: 'movie',

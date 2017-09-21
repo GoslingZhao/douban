@@ -19,9 +19,7 @@
 </template>
 
 <script>
-import AV from "../../assets/js/av"
-import Util from "../../util/util"
-import "../../assets/js/initLeanCloud"
+import axios from "axios"
 export default {
 
   name: 'login',
@@ -32,7 +30,10 @@ export default {
 		inputFlag: true,
 		username: '',
 		password: '',
-		logging: false 
+		logging: false,
+		unameHelp:'',
+		upwdHelp:'',
+		errorMessage:''
     };
   },
   methods:{
@@ -45,18 +46,30 @@ export default {
   		})) return;
 
   			this.logging = true;
-  		AV.User.logIn(username,pass).then(function(loginedUser){
-  			setTimeout(function(){
-  				this.$router.push({name:'movie'})
-  			}.bind(this),600)
-  		}.bind(this),function(error){
-  			alert('用户名和密码不匹配');
-  			this.openDialog('check');
-  			this.logging = false;
-  		}.bind(this))
+  		axios.post(API_PROXY+"/api/login",{
+			name:this.username,
+			password:this.password
+		}).then(res=>{console.log(res);
+			if(res.data){
+				sessionStorage.setItem('name', this.username);
+				alert("登录成功！");
+				this.$router.push({name:'movie'})
+			}
+		}).catch(error=>{console.log(error);
+				if(!res.data){
+			alert("账户不存或账户、密码错误")
+		}
+			}
+		)
   	},
   	isEmpty(val){
   		return val ===''
+  	},
+  	isValidUserName(val){
+  		return /^[a-zA-Z0-9_]+$/.test(val);
+  	},
+  	isValidPassword(val){
+  		return /^[A-Za-z0-9_-]{4,}$/.test(val); 
   	},
   	check(obj){
   		if(this.isEmpty(obj.username)){
@@ -69,25 +82,20 @@ export default {
   			this.openDialog('check');
   			return false;
   		}
+  		if(!this.isValidUserName(obj.username)){
+				// this.alert.content = '用户名不能含有除字母或数字或下划线之外的任何字符';
+				alert('用户名不能含有除字母或数字或下划线之外的任何字符')
+				this.openDialog('check');
+				return false;
+			}
+			if(!this.isValidPassword(obj.pass)){
+				// this.alert.content = '密码必须是至少4位的字母或数字结合';
+				alert('密码必须是至少4位的字母或数字结合')
+				this.openDialog('check');
+				return false;
+			}
   		return true;
   	},
-  	doneLogin(res){
-			this.alert.content = res.data.msg;
-			this.alert.ok = '';
-		    this.openDialog('check');
-		},
-		openDialog(ref) {
-	      // this.$refs[ref].open();
-	    },
-	    closeDialog(ref) {
-	      // this.$refs[ref].close();
-	    },
-	    onOpen() {
-	      console.log('Opened');
-	    },
-	    onClose(type) {
-	      console.log('Closed', type);
-	    },
   	goRegist(){
   		this.$router.push({name:'regist'})
   	}

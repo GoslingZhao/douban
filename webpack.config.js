@@ -8,7 +8,21 @@ module.exports = {
     publicPath: '/dist/',
     filename: 'build.js'
   },
+  devServer: {
+    historyApiFallback: true,
+    inline:true,
+    contentBase:"./",
+    port:'8088',
 
+    proxy:{
+           '/api/*': {
+                  target: 'http://localhost:3333',
+                  host: 'localhost:3333',
+                  changeOrigin:true
+              }
+
+        }
+  },
   module: {
     rules: [
       {
@@ -47,22 +61,6 @@ module.exports = {
     alias: {
       'vue$': 'vue/dist/vue.esm.js'
     }
-  },
-  devServer: {
-    historyApiFallback: true,
-    noInfo: true,
-    // inline:true,
-    // contentBase:"./",
-    // port:'8088',
-
-    // proxy:{
-    //        '/api/*': {
-    //               target: 'http://localhost:3333',
-    //               host: 'localhost:3333',
-    //               changeOrigin:true
-    //           }
-
-    //     }
   },
   performance: {
     hints: false

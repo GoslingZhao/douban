@@ -16,9 +16,6 @@
 		  <button class="raised warn" @click="goRegist">注册</button>
 		</form>
 		<div
-		  
-		  @open="onOpen"
-		  @close="onClose"
 		  ref="check">
 		</div>
 		
@@ -29,9 +26,7 @@
 </template>
 
 <script>
-import Util from "../../util/util.js"
-import AV from "../../assets/js/av.js"
-import "../../assets/js/initLeanCloud"
+import axios from "axios"
 export default {
 
   name: 'regist',
@@ -47,7 +42,8 @@ export default {
     	inputFlag: true,
     	username: '',
     	password: '',
-    	registing: false
+    	registing: false,
+
     };
   },
   methods:{
@@ -60,27 +56,18 @@ export default {
   		}))return;
 
   			this.registing = true
-
-  			var user = new AV.User();
-  			user.setUsername(username);
-  			user.setPassword(pass);
-  			user.signUp().then(function(loginedUser){
-  				this.registing = false;
-  				this.doneRegist();
-  				setTimeout(function(){
-  					this.$router.push({name:'movie'})
-  				}.bind(this),600)
-  			}.bind(this),(function(error){
-  				if(error.code = '202'){
-  					// this.alert.content = '用户名已存在';
-  					alert('用户名已存在')
-  				}else{
-  					// this.alert.content = '注册失败，请重试';
-  					alert('注册失败')
-  				}
-  				this.openDialog('check');
-  				this.registing = false;
-  			}.bind(this)));
+  		axios.post(API_PROXY+"/api/register",{
+			username:this.userame,
+			password:this.password
+		}).then(res=>{console.log(res); 
+				if(res.data===false){
+					alert("用户已存在")
+				}else{
+					alert("注册成功！");
+					this.$router.push({name:'movie'})
+				}
+		}).catch(error=>{console.log(error);
+		})
   	},
   	isEmpty(val){
   		return val === '';
@@ -117,24 +104,7 @@ export default {
 				return false;
 			}
 			return true
-  	},
-  	doneRegist(){
-  		this.alert.content = '注册成功';
-  		this.alert.ok = '';
-  		this.openDialog('check');
-  	},
-  	openDialog(ref) {
-	    // this.$refs[ref].open();
-	},
-	closeDialog(ref) {
-	    // this.$refs[ref].close();
-	},
-	onOpen() {
-	    console.log('Opened');
-	},
-	onClose(type) {
-	    console.log('Closed', type);
-	}
+  	}
   },
   mounted(){
   	this.tipFlag = true;

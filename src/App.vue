@@ -7,7 +7,6 @@
 <script>
 import Vue from 'vue'
 import home from './components/home/home.vue'
-import Util from './util/util'
 import Store from './assets/js/storage.js'
 export default {
   name: 'app',

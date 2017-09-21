@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 
 //连接mongodb
 var mongodb = require("mongoose");
-mongodb.connect("mongodb://localhost:27017/shiyuangou");
+mongodb.connect("mongodb://localhost:27017/douban");
 // dbhandle定义成了全局变量，所有的模块的公用
 global.dbhandler = require("./dbmodel/dbhandler.js");
 //

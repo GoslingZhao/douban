@@ -16,7 +16,7 @@ router.post("/register",function(req,res,next){
 
     //利用dbhandler.user  ,先find 查找是否有同名用户邮箱，
     dbhandler.user.findOne({
-        name:req.body.username
+        name:req.body.username,
     },function(error,data){
         if(data){
             res.send(false);
@@ -26,7 +26,7 @@ router.post("/register",function(req,res,next){
                 password:req.body.password,
             },function(error,result){
                 if(!error){
-                    res.redirect("/"); //重定向
+                    res.redirect("/");
                 }else{
                     console.log(error);
                 }
