@@ -68,7 +68,7 @@ export default {
       this.spinnerFlag = true;
       axios.get(API_PROXY+'https://api.douban.com/v2/movie/top250?count=10&start='+start)
 		  .then(function(res) {
-		  	console.log(res);
+		  	console.log("请求成功");
 		    res.data.subjects.forEach(movie=>{
 		    	this.movieLists.push(movie);
 		    })

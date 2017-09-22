@@ -86,25 +86,25 @@ export default {
   		if(this.isEmpty(obj.username)){
 				// this.alert.content = '用户名不能为空';
 				alert('用户名不能为空')
-				this.openDialog('check');
+				// this.openDialog('check');
 				return false;
 			}
 			if(this.isEmpty(obj.pass)){
 				this.alert.content = '密码不能为空';
 				alert('密码不能为空')
-				this.openDialog('check');
+				// this.openDialog('check');
 				return false;
 			}
 			if(!this.isValidUserName(obj.username)){
 				// this.alert.content = '用户名不能含有除字母或数字或下划线之外的任何字符';
 				alert('用户名不能含有除字母或数字或下划线之外的任何字符')
-				this.openDialog('check');
+				// this.openDialog('check');
 				return false;
 			}
 			if(!this.isValidPassword(obj.pass)){
 				// this.alert.content = '密码必须是至少4位的字母或数字结合';
 				alert('密码必须是至少4位的字母或数字结合')
-				this.openDialog('check');
+				// this.openDialog('check');
 				return false;
 			}
 			return true

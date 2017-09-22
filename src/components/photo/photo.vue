@@ -45,6 +45,7 @@ export default {
     loadMore:function() {
       this.page++;
         return axios.get(`https://gank.io/api/data/福利/10/${this.page}`).then(res=>{
+          console.log("请求成功");
           this.photoLists = [...this.photoLists,...res.data.results]
         }) 
         

@@ -18,6 +18,7 @@
 </template>
 <script>
 import axios from "axios"
+import { Indicator } from 'mint-ui';
 import { Swipe, SwipeItem} from 'vue-swipe'
 Swipe.auto= false;
 export default {
@@ -41,6 +42,7 @@ export default {
     loadMore: function() {
         axios.get(API_PROXY+'https://api.douban.com/v2/book/user/alex1504/collections')
         .then(function(res) {
+        	console.log("请求成功");
           this.books = res.data.collections;
           this.flag = false;
         }.bind(this))
